@@ -40,7 +40,6 @@ spec:
         #   path: /mnt/some/mydata # 물리적경로
         #   type: DirectoryOrCreate # path에 디렉토리가 없으면 자동 생성
         
-
 ---
 kind: Service
 apiVersion: v1
