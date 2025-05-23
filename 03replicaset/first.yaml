@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: webapp # ReplicaSet 이름
+
+spec:
+  replicas: 1 # 복제할 템플릿의 개수
+  selector: 
+    matchLabels: 
+      app: webapp # 사용할 템플릿의 이름
+
+  template: # 레플리카셋은 템플릿으로 생성됨. 템플릿 밑에는 파드 생성
+    metadata:
+      labels:
+        app: webapp # 템플릿 이름( service의 selector와 연결됨)
+
+    spec:
+      containers: 
+      - name: webapp 
+        image: coding404/k8s-coding404-webapp-react:v0-1

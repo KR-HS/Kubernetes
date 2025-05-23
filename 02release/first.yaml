@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webapp #파드명
+  labels: 
+    app: webapp # 이 이름이 service의 selector와 연결됩니다.
+    release: "0" # 버전명
+
+spec: # 파드가 가져야할 스펙을 지정
+  containers: 
+  - name: webapp
+    image: coding404/k8s-coding404-webapp-react:v0
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webapp-0-1 #파드명
+  labels: 
+    app: webapp # 이 이름이 service의 selector와 연결됩니다.
+    release: "0-1"
+spec: # 파드가 가져야할 스펙을 지정
+  containers: 
+  - name: webapp
+    image: coding404/k8s-coding404-webapp-react:v0-1

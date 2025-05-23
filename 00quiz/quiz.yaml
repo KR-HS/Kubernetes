@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata:
+  name: quiz-app # 객체의 "이름"입니다 (Service와 무관)
+
+spec:
+  selector: 
+    matchLabels: 
+      app: quiz-app # 아래에 있는 template.labels.app과 연결되서 파드 관리
+  replicas: 1
+  template: # 복제할 포드를 템플릿으로 정의함
+    metadata:
+      labels:
+        app: quiz-app # service와 연결됨~~
+
+    spec:
+      containers: 
+      - name: quiz-app
+        image: kimhyeongseob/k8s-quiz-demo:v1
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: production-microservice

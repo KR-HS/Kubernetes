@@ -1,0 +1,28 @@
+# 쿠버네티스에서 필요한 볼륨을 요청하는 작업
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+
+spec:
+  storageClassName: slow-ssd # PV와 연결되는 이름
+
+  resources:
+    requests:
+      storage: 7Gi # 클라우드 환경에 요청할거니 7정도로 줄임
+  
+  accessModes:
+    # 옵션이 3개
+    # ReadOnlyMany # 다중노드에서 접근해서 읽기 가능
+    # ReadWriteMany # 다중노드에서 접근해서 읽기/쓰기가능
+    - ReadWriteOnce # 싱글노드에서 읽기/쓰기 가능
+
+--- ## AWS EBS볼륨으로 생성
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: slow-ssd
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: gp2
+  # 크기를 지정하지 않았지만, PVC요청에 의해 다양하게 변할 수 있음
